@@ -48,6 +48,7 @@ var app = {
       }
    },
    onNotification: function (event) {
+    console.log("in onNotification");
       document.getElementById('nothing').style.display = 'none';
       app.addMessage(event.alert || event.version);
    },

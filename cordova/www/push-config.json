@@ -1,20 +1,8 @@
 {
-    "pushServerURL": "<pushServerURL e.g http(s)//host:port/context >",
-    "android": {
-        "senderID": "<senderID e.g Google Project ID only for android>",
-        "variantID": "<variantID e.g. 1234456-234320>",
-        "variantSecret": "<variantSecret e.g. 1234456-234320>"
-    },
-    "ios": {
-        "variantID": "<variantID e.g. 1234456-234320>",
-        "variantSecret": "<variantSecret e.g. 1234456-234320>"
-    },
-    "firefoxos": {
-      "variantID": "<variantID e.g. 1234456-234320>",
-      "variantSecret": "<variantSecret e.g. 1234456-234320>"
-    },
-    "windows": {
-      "variantID": "<variantID e.g. 1234456-234320>",
-      "variantSecret": "<variantSecret e.g. 1234456-234320>"
-    }
+   "pushServerURL": "http://192.168.1.19:8080/ag-push/",
+  "android" : {
+    "senderID": "1084300276834",
+    "variantID": "4b3bdb25-d45d-4d89-81e5-700eb857f4b1",
+    "variantSecret": "21e8590c-a9b7-40cd-abf0-4cb3b955978d"
+  }
 }
