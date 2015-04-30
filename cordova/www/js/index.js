@@ -1,3 +1,4 @@
+/*! jQuery v1.10.2 | (c) 2005, 2013 jQuery Foundation, Inc. | jquery.org/license
 /* JBoss, Home of Professional Open Source
  * Copyright Red Hat, Inc., and individual contributors
  *
@@ -35,7 +36,9 @@ var app = {
         app.addMessage('Push plugin not installed!');
       }
 
-      function successHandler() {
+      function successHandler(deviceToken) {
+        app.deviceToken = deviceToken;
+        console.log("DEVICE TOKEN : " + app.deviceToken);
          app.clearMessages();
          if (document.getElementById("messages").childElementCount === 0) {
            document.getElementById("nothing").style.display = 'block';
@@ -49,8 +52,44 @@ var app = {
    },
    onNotification: function (event) {
     console.log("in onNotification");
+    console.log("PUSH IDENTIFIER " +  event.payload['aerogear-push-id']);
       document.getElementById('nothing').style.display = 'none';
       app.addMessage(event.alert || event.version);
+
+      //let's do some analytics 
+      var client = AeroGear.UnifiedPushClient(
+        "a37a20aa-a0f9-4fa0-bcc1-1f04ce2dbaaa",
+        "8aa27c7b-3990-4cdf-bb6e-af1548c1a1ec",
+            event.payload['aerogear-push-id'],
+            "http://192.168.1.19:8080/ag-push"
+        );
+
+        // assemble the metadata for the registration:
+        var metadata = {
+            deviceToken: app.deviceToken
+        };
+
+        var settings = {};
+
+        settings.metadata = metadata;
+
+        // perform the registration against the UnifiedPush server:
+        client.registerWithPushServer( settings ).then(function() {
+                        console.log("Registered with UnifiedPush server!");
+                    })
+                    .then(null, function(error) {
+                        console.log("Error when registering with UnifiedPush server! " + error);
+                        for (var property in error) {
+    if (error.hasOwnProperty(property)) {
+        console.log(property);
+    }
+    console.log(error.statusText);
+    console.log(error.agXHR);
+    console.log(error.data);
+  }
+
+                    });
+
    },
    addMessage: function (message) {
       var messages = document.getElementById("messages"),
